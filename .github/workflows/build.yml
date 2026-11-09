@@ -1,0 +1,71 @@
+name: Build & Release
+
+on:
+  push:
+    branches: [ "main" ]
+    tags: [ "v*" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Test
+        run: dotnet test ArtCraftPresence.sln -c Release
+
+      - name: Version
+        id: ver
+        shell: pwsh
+        run: |
+          if ($env:GITHUB_REF_TYPE -eq 'tag') { $v = $env:GITHUB_REF_NAME.TrimStart('v') } else { $v = '0.0.0-dev' }
+          "version=$v" >> $env:GITHUB_OUTPUT
+
+      - name: Publish (single-file, self-contained)
+        run: >
+          dotnet publish App/App.csproj -c Release -r win-x64 --self-contained true
+          -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
+          -p:EnableCompressionInSingleFile=true -p:DebugType=none
+          -p:Version=${{ steps.ver.outputs.version }}
+          -o publish
+
+      - name: Package
+        shell: pwsh
+        run: |
+          $name = "ArtCraftPresence-v${{ steps.ver.outputs.version }}-win-x64"
+          New-Item -ItemType Directory -Path "dist/$name" -Force | Out-Null
+          Copy-Item publish/ArtCraftPresence.exe, README.md, LICENSE.md "dist/$name/"
+          Copy-Item icons "dist/$name/icons" -Recurse
+          Remove-Item "dist/$name/icons/src" -Recurse -Force -ErrorAction SilentlyContinue
+          Compress-Archive -Path "dist/$name/*" -DestinationPath "dist/$name.zip"
+          Copy-Item publish/ArtCraftPresence.exe "dist/ArtCraftPresence.exe"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ArtCraftPresence-win-x64
+          path: dist/*.zip
+          if-no-files-found: error
+
+      - name: Create GitHub Release
+        if: github.ref_type == 'tag'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $zip = "dist/ArtCraftPresence-v${{ steps.ver.outputs.version }}-win-x64.zip"
+          gh release create "$env:GITHUB_REF_NAME" $zip dist/ArtCraftPresence.exe `
+            --title "ArtCraftPresence $env:GITHUB_REF_NAME" --generate-notes
