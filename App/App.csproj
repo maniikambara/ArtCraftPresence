@@ -12,7 +12,7 @@
 		<ApplicationIcon>Assets\appicon.ico</ApplicationIcon>
 		<Version>1.0.0</Version>
 		<Product>ArtCraftPresence</Product>
-		<Description>Discord Rich Presence untuk aplikasi ArtCraft</Description>
+		<Description>Discord Rich Presence for ArtCraft apps</Description>
 	</PropertyGroup>
 
 	<ItemGroup>

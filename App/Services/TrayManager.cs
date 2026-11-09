@@ -19,9 +19,9 @@ public class TrayManager : IDisposable
         using var stream = typeof(TrayManager).Assembly.GetManifestResourceStream("appicon.ico");
         _icon = stream is not null ? new Icon(stream) : SystemIcons.Application;
 
-        _statusItem = new ToolStripMenuItem("Menunggu aplikasi ArtCraft...") { Enabled = false };
+        _statusItem = new ToolStripMenuItem("Waiting for an ArtCraft app...") { Enabled = false };
 
-        var secretItem = new ToolStripMenuItem("Secret mode (sembunyikan nama file)")
+        var secretItem = new ToolStripMenuItem("Secret mode (hide file names)")
         {
             CheckOnClick = true,
             Checked = SettingsManager.Settings.SecretMode
@@ -32,7 +32,7 @@ public class TrayManager : IDisposable
             SettingsManager.SaveSettings();
         };
 
-        var startupItem = new ToolStripMenuItem("Jalankan saat Windows start")
+        var startupItem = new ToolStripMenuItem("Open on Windows startup")
         {
             CheckOnClick = true,
             Checked = SettingsManager.Settings.OpenOnStartup
@@ -46,11 +46,11 @@ public class TrayManager : IDisposable
         menu.Items.Add(startupItem);
         menu.Items.Add(new ToolStripSeparator());
         menu.Items.Add("Settings (settings.yml)", null, (_, _) => OpenPath(SettingsManager.SettingsFilePath));
-        menu.Items.Add("Daftar aplikasi (apps.yml)", null, (_, _) => OpenPath(SettingsManager.AppsFilePath));
-        menu.Items.Add("Buka folder settings", null, (_, _) => OpenPath(SettingsManager.SettingsDirectory));
+        menu.Items.Add("App list (apps.yml)", null, (_, _) => OpenPath(SettingsManager.AppsFilePath));
+        menu.Items.Add("Open settings folder", null, (_, _) => OpenPath(SettingsManager.SettingsDirectory));
         menu.Items.Add("Discord Developer Portal", null, (_, _) => OpenPath(Constants.DISCORD_PORTAL_URL));
         menu.Items.Add(new ToolStripSeparator());
-        menu.Items.Add("Restart (muat ulang settings)", null, (_, _) => Restart());
+        menu.Items.Add("Restart (reload settings)", null, (_, _) => Restart());
         menu.Items.Add("Exit", null, (_, _) => Application.Exit());
 
         _trayIcon = new NotifyIcon
@@ -108,7 +108,7 @@ public class TrayManager : IDisposable
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"Tidak bisa membuka {path}\n{ex.Message}", Constants.APP_NAME,
+            MessageBox.Show($"Could not open {path}\n{ex.Message}", Constants.APP_NAME,
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }

@@ -18,7 +18,7 @@ public class DiscordManager : IDisposable
     /// <summary>Raised with a short status text for the tray (e.g. "FilmCraft: Editing intro.fcproj").</summary>
     public event Action<string>? StatusChanged;
 
-    public string Status { get; private set; } = "Menunggu aplikasi ArtCraft...";
+    public string Status { get; private set; } = "Waiting for an ArtCraft app...";
 
     public Task RunAsync() => Task.Run(LoopAsync);
 
@@ -55,7 +55,7 @@ public class DiscordManager : IDisposable
         {
             ClearClient();
             _sessionStartUtc = null;
-            SetStatus("Menunggu aplikasi ArtCraft...");
+            SetStatus("Waiting for an ArtCraft app...");
             return;
         }
 
@@ -65,12 +65,12 @@ public class DiscordManager : IDisposable
 
         if (string.IsNullOrEmpty(appId) || !appId.All(char.IsDigit))
         {
-            SetStatus($"{app.Name} terdeteksi, tapi Application ID Discord belum diisi");
+            SetStatus($"{app.Name} detected, but the Discord Application ID is not set");
             if (!_warnedNoAppId)
             {
                 _warnedNoAppId = true;
-                TrayManager.Notify("Application ID belum diisi",
-                    "Isi DefaultApplicationId di settings.yml (klik kanan icon tray > Settings), lalu Restart.");
+                TrayManager.Notify("Application ID not set",
+                    "Set DefaultApplicationId in settings.yml (right-click the tray icon > Settings), then Restart.");
             }
 
             return;
@@ -78,7 +78,7 @@ public class DiscordManager : IDisposable
 
         if (_invalidAppIds.Contains(appId))
         {
-            SetStatus($"Application ID {appId} ditolak Discord - cek settings.yml / apps.yml");
+            SetStatus($"Application ID {appId} was rejected by Discord - check settings.yml / apps.yml");
             return;
         }
 
@@ -90,15 +90,15 @@ public class DiscordManager : IDisposable
                 Logger = new ConsoleLogger { Level = LogLevel.Warning }
             };
             _client.OnError += (_, e) => Logger.Log($"Discord error: {e.Message}");
-            _client.OnConnectionFailed += (_, _) => SetStatus("Discord tidak terhubung (apakah Discord sedang jalan?)");
+            _client.OnConnectionFailed += (_, _) => SetStatus("Not connected to Discord (is Discord running?)");
             var idForClose = appId;
             _client.OnClose += (_, e) =>
             {
                 Logger.Log($"Discord closed connection: {e.Code} {e.Reason}");
                 if (e.Code != 4000) return; // 4000 = Invalid Client ID
                 if (!_invalidAppIds.Add(idForClose)) return;
-                TrayManager.Notify("Application ID tidak valid",
-                    $"Discord menolak Application ID {idForClose}. Salin ulang dari Discord Developer Portal, lalu Restart.");
+                TrayManager.Notify("Invalid Application ID",
+                    $"Discord rejected Application ID {idForClose}. Copy it again from the Discord Developer Portal, then Restart.");
             };
             _client.Initialize();
             _lastPresenceSignature = string.Empty;

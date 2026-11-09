@@ -1,20 +1,20 @@
 # ArtCraftPresence
 
-Discord Rich Presence untuk aplikasi [ArtCraft](https://getartcraft.com/). Program ini terinspirasi dari [DAWPresence](https://github.com/Myuuiii/DAWPresence).
+Discord Rich Presence for [ArtCraft](https://getartcraft.com/) apps. Inspired by [DAWPresence](https://github.com/Myuuiii/DAWPresence).
 
-Saat Anda membuka salah satu aplikasi ArtCraft (PhotoCraft, FilmCraft, PdfCraft, dan lainnya), status Discord Anda menampilkan:
+When you open an ArtCraft app (PhotoCraft, FilmCraft, PdfCraft and more), your Discord status shows:
 
-- **icon aplikasi** yang sedang dipakai,
-- **nama file / project** yang sedang dibuka, diambil dari judul jendela (atau "Idle"),
-- **kategori** aplikasi, misalnya "Video and effects",
-- **lama pemakaian**, dihitung sejak aplikasi dibuka,
-- tombol **Get ArtCraft**.
+- the **icon** of the app you're using,
+- the **file / project** you have open, read from the window title (or "Idle"),
+- the app's **category**, e.g. "Video and effects",
+- **elapsed time** since the app was opened,
+- a **Get ArtCraft** button.
 
-Program berjalan di background dan icon-nya muncul di system tray.
+It runs in the background with an icon in the system tray.
 
-## Aplikasi yang didukung
+## Supported apps
 
-| Kategori | Aplikasi (nama proses) |
+| Category | App (process name) |
 |---|---|
 | Graphics and design | PhotoCraft (`photocraft`), VectorCraft (`vectorcraft`), LightCraft (`lightcraft`), DesignCraft (`designcraft`), FigCraft (`figcraft`), TextureCraft (`texturecraft`), MaterialCraft (`materialcraft`) |
 | Video and effects | FilmCraft (`filmcraft`), EffectCraft (`effectcraft`) |
@@ -23,164 +23,164 @@ Program berjalan di background dan icon-nya muncul di system tray.
 | Office | WordCraft (`wordcraft`), GridCraft (`gridcraft`), DeckCraft (`deckcraft`), PdfCraft (`pdfcraft`) |
 | Developer tools | Craft Anything (`craft-anything`) |
 
-Lokasi instalasi default: `C:\Program Files\<NamaApp>\<namaapp>.exe`, contohnya `C:\Program Files\FilmCraft\filmcraft.exe`. File `*-cli.exe` dan proses tanpa jendela diabaikan.
+Default install location: `C:\Program Files\<AppName>\<appname>.exe`, e.g. `C:\Program Files\FilmCraft\filmcraft.exe`. `*-cli.exe` tools and processes without a window are ignored.
 
-Kalau beberapa aplikasi terbuka sekaligus, yang ditampilkan adalah aplikasi yang sedang Anda pakai (jendela aktif).
+If several apps are open at once, the one you're currently using (the active window) is shown.
 
 ## Download
 
-Unduh `ArtCraftPresence.exe` (atau file `.zip` yang sudah termasuk folder `icons/`) dari halaman **[Releases](../../releases/latest)**.
+Download `ArtCraftPresence.exe` (or the `.zip`, which also includes the `icons/` folder) from the **[Releases](../../releases/latest)** page.
 
 ---
 
-## 1. Buat Discord Application (wajib, sekali saja)
+## 1. Create a Discord Application (required, one time)
 
-Discord hanya menampilkan Rich Presence dari "Application" yang terdaftar. Karena itu Anda perlu membuat satu application:
+Discord only shows Rich Presence for a registered "Application", so you need to create one:
 
-1. Buka <https://discord.com/developers/applications> lalu login.
-2. Klik **New Application** dan beri nama **`ArtCraft`**. Nama ini yang muncul sebagai *"Playing ArtCraft"*.
-3. Di halaman **General Information**, salin **Application ID** (berupa angka panjang).
-4. (Opsional) Upload `icons/artcraft-app-icon-1024.png` sebagai **App Icon**.
-5. **(Disarankan)** Buka **Rich Presence → Art Assets**, lalu upload `icons/artcraft.png` dengan nama key `artcraft`. File ini menjadi logo kecil di pojok icon aplikasi. Kalau belum di-upload, presence tetap jalan, hanya saja logo kecil tidak tampil.
+1. Go to <https://discord.com/developers/applications> and log in.
+2. Click **New Application** and name it **`ArtCraft`**. This name appears as *"Playing ArtCraft"*.
+3. On the **General Information** page, copy the **Application ID** (a long number).
+4. (Optional) Upload `icons/artcraft-app-icon-1024.png` as the **App Icon**.
+5. **(Recommended)** Open **Rich Presence → Art Assets** and upload `icons/artcraft.png` with the key `artcraft`. It becomes the small logo in the corner of the app icon. Without it, the presence still works, but the small logo is not shown.
 
-### (Opsional) Tampilkan "Playing FilmCraft", bukan "Playing ArtCraft"
+### (Optional) Show "Playing FilmCraft" instead of "Playing ArtCraft"
 
-Ulangi langkah di atas untuk setiap aplikasi, dengan nama application `FilmCraft`, `PhotoCraft`, dan seterusnya. Lalu isi `ApplicationId` setiap aplikasi di `apps.yml` (lihat bagian 3). Aplikasi yang `ApplicationId`-nya kosong otomatis memakai `DefaultApplicationId`.
+Repeat the steps above once per app, naming the applications `FilmCraft`, `PhotoCraft`, and so on. Then fill in each app's `ApplicationId` in `apps.yml` (see section 3). Apps with an empty `ApplicationId` use `DefaultApplicationId`.
 
-Ada cara lain tanpa membuat banyak application. Di `settings.yml`, isi `StatusDisplay: State` dan `StateText: '{app}'`. Dengan begitu, status di member list menampilkan nama aplikasi Craft.
+There is also a way without creating many applications: in `settings.yml`, set `StatusDisplay: State` and `StateText: '{app}'`. The member list then shows the Craft app's name.
 
-## 2. Jalankan
+## 2. Run it
 
-1. Jalankan `publish\ArtCraftPresence.exe`. File ini self-contained, jadi tidak perlu install .NET.
-   - Saran: pindahkan exe ini ke folder tetap, misalnya `C:\Program Files\ArtCraftPresence\`, sebelum dijalankan pertama kali. Fitur *start with Windows* mencatat lokasi exe.
-2. Saat pertama kali dijalankan, akan muncul dialog. Klik **Yes** untuk membuka Developer Portal dan `settings.yml`.
-3. Tempel Application ID ke baris berikut:
+1. Run `ArtCraftPresence.exe`. It is self-contained, so you don't need to install .NET.
+   - Tip: move the exe to a permanent folder, e.g. `C:\Program Files\ArtCraftPresence\`, before the first run. The *start with Windows* option remembers where the exe is.
+2. On the first run, a dialog appears. Click **Yes** to open the Developer Portal and `settings.yml`.
+3. Paste your Application ID into this line:
    ```yaml
    DefaultApplicationId: 123456789012345678
    ```
-4. Simpan file, lalu **klik kanan icon tray, pilih Restart**.
-5. Buka FilmCraft (atau aplikasi Craft lain). Status Discord Anda akan berubah dalam ±3 detik.
+4. Save the file, then **right-click the tray icon and choose Restart**.
+5. Open FilmCraft (or another Craft app). Your Discord status updates within about 3 seconds.
 
-> Pastikan aplikasi Discord desktop sedang berjalan. Aktifkan juga **User Settings → Activity Privacy → Share my activity**.
+> Make sure the Discord desktop app is running, and that **User Settings → Activity Privacy → Share my activity** is turned on.
 
-## 3. Konfigurasi
+## 3. Configuration
 
-Semua file konfigurasi ada di `%APPDATA%\ArtCraftPresence\`. Anda bisa membukanya lewat menu tray. Setelah mengubah file, pilih **Restart**.
+All config files are in `%APPDATA%\ArtCraftPresence\`. You can open them from the tray menu. After editing a file, choose **Restart**.
 
 ### `settings.yml`
 
-| Opsi | Default | Keterangan |
+| Option | Default | Description |
 |---|---|---|
-| `DefaultApplicationId` | *(kosong)* | Application ID Discord, **wajib** diisi |
-| `InstallRoot` | `C:\Program Files` | Folder induk instalasi aplikasi Craft |
-| `OnlyFromInstallRoot` | `false` | `true` = hanya deteksi exe yang ada di `InstallRoot` |
-| `UpdateInterval` | `00:00:03` | Seberapa sering status dicek |
-| `ImageSource` | `Url` | `Url` = icon diambil langsung dari getartcraft.com. `AssetKey` = icon yang Anda upload ke Developer Portal |
-| `ShowSmallImage` / `SmallImage` | `true` / kosong | Logo kecil di pojok icon. Pada mode `AssetKey`, default key-nya `artcraft` |
-| `IdleText` | `Idle` | Teks saat belum ada file yang dibuka |
-| `WorkingPrefixText` / `WorkingSuffixText` | `Editing ` / kosong | Teks sebelum / sesudah nama file |
-| `StateText` | `{category}` | Baris kedua. Placeholder yang bisa dipakai: `{app}`, `{category}`, `{version}` |
-| `LargeImageText` | `{app} {version}` | Teks saat kursor diarahkan ke icon, contohnya "FilmCraft v0.21.0" |
-| `StatusDisplay` | `Name` | Teks setelah "Playing" di member list: `Name`, `Details`, atau `State` |
-| `ShowElapsedTime` | `true` | Tampilkan lama pemakaian |
-| `KeepTimerAcrossApps` | `false` | `true` = timer tidak di-reset saat pindah aplikasi Craft |
-| `SecretMode` / `SecretModeText` | `false` | Sembunyikan nama file. Bisa juga di-toggle dari tray |
-| `ShowWebsiteButton` | `true` | Tombol "Get ArtCraft" |
-| `DisablePopup` | `false` | Matikan notifikasi saat program start |
-| `OpenOnStartup` | `true` | Jalan otomatis saat Windows start |
-| `Debug` | `false` | Tulis log ke `log.txt` |
+| `DefaultApplicationId` | *(empty)* | Discord Application ID, **required** |
+| `InstallRoot` | `C:\Program Files` | Parent folder where the Craft apps are installed |
+| `OnlyFromInstallRoot` | `false` | `true` = only detect exes located in `InstallRoot` |
+| `UpdateInterval` | `00:00:03` | How often to check for running apps |
+| `ImageSource` | `Url` | `Url` = icons are loaded from getartcraft.com. `AssetKey` = icons you uploaded to the Developer Portal |
+| `ShowSmallImage` / `SmallImage` | `true` / empty | Small logo in the corner of the icon. Asset key or https URL; empty = asset key `artcraft` |
+| `IdleText` | `Idle` | Text shown when no file is open |
+| `WorkingPrefixText` / `WorkingSuffixText` | `Editing ` / empty | Text before / after the file name |
+| `StateText` | `{category}` | Second line. Placeholders: `{app}`, `{category}`, `{version}` |
+| `LargeImageText` | `{app} {version}` | Text shown when hovering the icon, e.g. "FilmCraft v0.21.0" |
+| `StatusDisplay` | `Name` | What appears after "Playing" in the member list: `Name`, `Details` or `State` |
+| `ShowElapsedTime` | `true` | Show elapsed time |
+| `KeepTimerAcrossApps` | `false` | `true` = don't reset the timer when switching between Craft apps |
+| `SecretMode` / `SecretModeText` | `false` | Hide file names. Can also be toggled from the tray |
+| `ShowWebsiteButton` | `true` | "Get ArtCraft" button |
+| `DisablePopup` | `false` | Disable the notification on startup |
+| `OpenOnStartup` | `true` | Start automatically with Windows |
+| `Debug` | `false` | Write a log to `log.txt` |
 
 ### `apps.yml`
 
-Berisi daftar aplikasi yang dideteksi. Anda bisa menonaktifkan aplikasi tertentu (`Enabled: false`), mengganti nama yang tampil, atau menambah aplikasi Craft baru:
+The list of apps to detect. You can disable an app (`Enabled: false`), change the displayed name, or add new Craft apps:
 
 ```yaml
 - Name: FilmCraft
-  ProcessName: filmcraft        # nama .exe tanpa .exe
-  Folder: FilmCraft             # folder di InstallRoot
+  ProcessName: filmcraft        # .exe name without .exe
+  Folder: FilmCraft             # folder inside InstallRoot
   Category: Video and effects
-  ImageKey: filmcraft           # dipakai saat ImageSource: AssetKey
+  ImageKey: filmcraft           # used when ImageSource: AssetKey
   IconUrl: https://getartcraft.com/images/apps/filmcraft/icon.webp
-  ApplicationId: ''             # opsional, Application ID khusus FilmCraft
+  ApplicationId: ''             # optional, Application ID only for FilmCraft
   Enabled: true
 ```
 
-## Kalau icon tidak muncul di Discord
+## Icons not showing in Discord?
 
-Mode `Url` memakai gambar langsung dari getartcraft.com. Kalau Discord tidak menampilkannya, pakai mode upload:
+`Url` mode loads images directly from getartcraft.com. If Discord doesn't show them, use uploaded assets instead:
 
-1. Di Developer Portal, buka application Anda, lalu **Rich Presence → Art Assets**.
-2. Upload semua PNG dari folder `icons/`. Nama file menjadi key-nya, contohnya `filmcraft`, `photocraft`, `artcraft`.
-   Kalau Anda memakai application terpisah per aplikasi, upload icon yang sesuai ke masing-masing application.
-3. Di `settings.yml`, ubah ke `ImageSource: AssetKey`, lalu pilih Restart.
+1. In the Developer Portal, open your application and go to **Rich Presence → Art Assets**.
+2. Upload all PNGs from the `icons/` folder. The file name becomes the key, e.g. `filmcraft`, `photocraft`, `artcraft`.
+   If you use a separate application per app, upload the matching icon to each application.
+3. In `settings.yml`, set `ImageSource: AssetKey`, then choose Restart.
 
-> Asset yang baru di-upload bisa butuh beberapa menit sebelum muncul.
+> Newly uploaded assets can take a few minutes to appear.
 
 ## Troubleshooting
 
-| Gejala | Solusi |
+| Symptom | Fix |
 |---|---|
-| Tray menulis "Application ID belum diisi" | Isi `DefaultApplicationId`, lalu Restart |
-| Muncul notifikasi "Application ID tidak valid" | ID salah salin. Salin ulang dari halaman General Information |
-| "Discord tidak terhubung" | Buka aplikasi Discord desktop. Versi browser tidak mendukung RPC |
-| Status tidak muncul sama sekali | Cek Activity Privacy di Discord. Aktifkan `Debug: true`, lalu lihat `log.txt` |
-| Nama file tidak terbaca | Aplikasi tersebut mungkin belum menaruh nama file di judul jendela. Yang tampil adalah `IdleText` |
+| Tray says "Application ID is not set" | Set `DefaultApplicationId`, then Restart |
+| "Invalid Application ID" notification | The ID was copied incorrectly. Copy it again from the General Information page |
+| "Not connected to Discord" | Open the Discord desktop app. The browser version doesn't support RPC |
+| Status doesn't show at all | Check Activity Privacy in Discord. Set `Debug: true` and look at `log.txt` |
+| File name isn't detected | The app may not put the file name in its window title yet. `IdleText` is shown instead |
 
-## Build dari source
+## Building from source
 
-Butuh [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0).
+Requires the [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0).
 
 ```bat
 tools\build.bat
 ```
 
-Hasilnya `publish\ArtCraftPresence.exe`, berupa satu file self-contained.
+The output is `publish\ArtCraftPresence.exe`, a single self-contained file.
 
-Test:
+Tests:
 
 ```bat
 dotnet test
 ```
 
-## Struktur project
+## Project structure
 
 ```
 ArtCraftPresence/
 ├─ App/
-│  ├─ Program.cs               entry point, single-instance, first-run setup
-│  ├─ AppSettings.cs           isi settings.yml
-│  ├─ CraftApp.cs              model + daftar 16 aplikasi ArtCraft
-│  ├─ WindowTitleParser.cs     ambil nama file dari judul jendela
-│  ├─ NativeWindow.cs          Win32: judul jendela & jendela aktif
+│  ├─ Program.cs               entry point, single instance, first-run setup
+│  ├─ AppSettings.cs           settings.yml options
+│  ├─ CraftApp.cs              app model + list of the 16 ArtCraft apps
+│  ├─ WindowTitleParser.cs     gets the file name from the window title
+│  ├─ NativeWindow.cs          Win32: window titles & active window
 │  └─ Services/
-│     ├─ AppDetector.cs        cari aplikasi Craft yang sedang berjalan
-│     ├─ DiscordManager.cs     kirim Rich Presence ke Discord
-│     ├─ SettingsManager.cs    baca/tulis settings.yml & apps.yml
-│     ├─ TrayManager.cs        icon & menu system tray
+│     ├─ AppDetector.cs        finds running Craft apps
+│     ├─ DiscordManager.cs     sends Rich Presence to Discord
+│     ├─ SettingsManager.cs    reads/writes settings.yml & apps.yml
+│     ├─ TrayManager.cs        system tray icon & menu
 │     ├─ StartupManager.cs     start with Windows (registry HKCU\...\Run)
 │     └─ Logger.cs
-├─ App.Tests/                  unit test (xUnit)
-├─ icons/                      icon PNG 512×512 untuk upload ke Discord
+├─ App.Tests/                  unit tests (xUnit)
+├─ icons/                      512×512 PNG icons for uploading to Discord
 └─ tools/build.bat
 ```
 
-Uninstall dari startup: `ArtCraftPresence.exe /uninstall`.
+Remove from Windows startup: `ArtCraftPresence.exe /uninstall`.
 
-## Rilis versi baru
+## Releasing a new version
 
-Rilis dibuat otomatis oleh GitHub Actions setiap kali tag `v*` di-push:
+GitHub Actions creates a release automatically whenever a `v*` tag is pushed:
 
 ```bash
 git tag v1.0.1
 git push origin v1.0.1
 ```
 
-## Lisensi
+## License
 
-[GPL-3.0](LICENSE.md), sama seperti DAWPresence yang menjadi dasar proyek ini.
+[GPL-3.0](LICENSE.md), the same as DAWPresence, which this project is based on.
 
-## Kredit
+## Credits
 
-- Konsep dan struktur dari [DAWPresence](https://github.com/Myuuiii/DAWPresence) oleh Myuuiii.
-- Icon aplikasi © ArtCraft ([getartcraft.com](https://getartcraft.com/)).
-- [DiscordRichPresence](https://github.com/Lachee/discord-rpc-csharp) dan [YamlDotNet](https://github.com/aaubry/YamlDotNet).
+- Concept and structure from [DAWPresence](https://github.com/Myuuiii/DAWPresence) by Myuuiii.
+- App icons © ArtCraft ([getartcraft.com](https://getartcraft.com/)).
+- [DiscordRichPresence](https://github.com/Lachee/discord-rpc-csharp) and [YamlDotNet](https://github.com/aaubry/YamlDotNet).

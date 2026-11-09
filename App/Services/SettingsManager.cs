@@ -68,8 +68,8 @@ public static class SettingsManager
         catch (Exception ex)
         {
             BackupAsError(path);
-            MessageBox.Show($"{Path.GetFileName(path)} tidak valid dan sudah di-reset ke default.\n" +
-                            $"File lama disimpan sebagai .error\n\n{ex.Message}",
+            MessageBox.Show($"{Path.GetFileName(path)} is invalid and was reset to defaults.\n" +
+                            $"The old file was saved with an .error extension\n\n{ex.Message}",
                 Constants.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return fallback();
         }
@@ -101,15 +101,15 @@ public static class SettingsManager
     }
 
     private const string SettingsHeader =
-        "# ArtCraftPresence settings. Simpan file ini lalu klik kanan icon tray > Restart.\n" +
-        "# DefaultApplicationId: Application ID dari https://discord.com/developers/applications\n" +
-        "# ImageSource: Url (icon dari getartcraft.com) atau AssetKey (icon yang di-upload ke Discord Developer Portal)\n\n";
+        "# ArtCraftPresence settings. Save this file, then right-click the tray icon > Restart.\n" +
+        "# DefaultApplicationId: Application ID from https://discord.com/developers/applications\n" +
+        "# ImageSource: Url (icons from getartcraft.com) or AssetKey (icons uploaded to the Discord Developer Portal)\n\n";
 
     private const string AppsHeader =
-        "# Daftar aplikasi ArtCraft yang dideteksi.\n" +
-        "# ProcessName = nama .exe tanpa .exe | Folder = nama folder di InstallRoot\n" +
-        "# ApplicationId (opsional) = Application ID khusus aplikasi ini, supaya Discord menulis \"Playing FilmCraft\".\n" +
-        "#   Kosongkan untuk memakai DefaultApplicationId dari settings.yml.\n\n";
+        "# ArtCraft apps to detect.\n" +
+        "# ProcessName = .exe name without .exe | Folder = folder name inside InstallRoot\n" +
+        "# ApplicationId (optional) = Application ID only for this app, so Discord shows \"Playing FilmCraft\".\n" +
+        "#   Leave empty to use DefaultApplicationId from settings.yml.\n\n";
 
     public static void SaveSettings() =>
         File.WriteAllText(SettingsFilePath, SettingsHeader + Serializer.Serialize(Settings));

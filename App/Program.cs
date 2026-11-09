@@ -30,7 +30,7 @@ internal static class Program
 
         if (!isFirst)
         {
-            MessageBox.Show($"{Constants.APP_NAME} sudah berjalan. Lihat icon-nya di system tray.",
+            MessageBox.Show($"{Constants.APP_NAME} is already running. Look for its icon in the system tray.",
                 Constants.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
             return;
         }
@@ -59,7 +59,7 @@ internal static class Program
         else if (!SettingsManager.Settings.DisablePopup)
         {
             TrayManager.Notify(Constants.APP_NAME,
-                "Berjalan di background. Klik kanan icon tray untuk settings / exit.");
+                "Running in the background. Right-click the tray icon for settings or to exit.");
         }
 
         _ = discord.RunAsync();
@@ -70,12 +70,12 @@ internal static class Program
     private static void FirstRunSetup()
     {
         var answer = MessageBox.Show(
-            "Selamat datang di ArtCraftPresence!\n\n" +
-            "Untuk menampilkan status di Discord, dibutuhkan Discord Application ID:\n" +
-            "1. Buka Discord Developer Portal > New Application (beri nama misalnya \"ArtCraft\")\n" +
-            "2. Salin \"Application ID\" dari halaman General Information\n" +
-            "3. Tempel ke DefaultApplicationId di settings.yml, simpan, lalu klik kanan icon tray > Restart\n\n" +
-            "Buka Developer Portal dan settings.yml sekarang?",
+            "Welcome to ArtCraftPresence!\n\n" +
+            "To show your status on Discord, a Discord Application ID is required:\n" +
+            "1. Open the Discord Developer Portal > New Application (name it e.g. \"ArtCraft\")\n" +
+            "2. Copy the \"Application ID\" from the General Information page\n" +
+            "3. Paste it into DefaultApplicationId in settings.yml, save, then right-click the tray icon > Restart\n\n" +
+            "Open the Developer Portal and settings.yml now?",
             Constants.APP_NAME, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
         if (answer != DialogResult.Yes) return;
