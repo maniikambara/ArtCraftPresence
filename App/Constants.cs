@@ -3,7 +3,6 @@ namespace ArtCraftPresence;
 internal static class Constants
 {
     public const string APP_NAME = "ArtCraftPresence";
-    public const string APP_CREDITS = "ArtCraftPresence";
 
     public const string SETTINGS_DIRECTORY_NAME = "ArtCraftPresence";
     public const string SETTINGS_FILENAME = "settings.yml";

@@ -50,7 +50,6 @@ jobs:
           New-Item -ItemType Directory -Path "dist/$name" -Force | Out-Null
           Copy-Item publish/ArtCraftPresence.exe, README.md, LICENSE.md "dist/$name/"
           Copy-Item icons "dist/$name/icons" -Recurse
-          Remove-Item "dist/$name/icons/src" -Recurse -Force -ErrorAction SilentlyContinue
           Compress-Archive -Path "dist/$name/*" -DestinationPath "dist/$name.zip"
           Copy-Item publish/ArtCraftPresence.exe "dist/ArtCraftPresence.exe"
 
